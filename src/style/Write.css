@@ -1,0 +1,22 @@
+.post-title{
+    width: 1000px;
+    height: 30px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.posting{
+    height: 1000px;
+}
+
+.post-submit{
+    margin: 30px;
+}
+
+.write-form{
+    display: inline-block;
+    width: 1000px;
+    vertical-align: top;
+    margin-top: 200px;
+}
