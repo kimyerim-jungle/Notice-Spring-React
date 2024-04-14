@@ -13,7 +13,7 @@ public class PostService {
 
     // post 등록
     public void postUpload(Post post, String id){
-        Long newindex = postRepo.count();
+        Long newindex = postRepo.count()+1;
         PostEntity newPost = PostEntity.builder()
                 .postIndex(newindex)
                 .postTitle(post.getTitle())

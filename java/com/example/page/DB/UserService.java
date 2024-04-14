@@ -19,14 +19,14 @@ public class UserService {
     //public UserService(UserTable userRepo){
     //    this.userRepo = userRepo;
     //}
-    public boolean validateUser(UserEntity user){
+    public boolean validateUser(UserEntity user){ // 존재하는 지 확인
         Optional<UserEntity> vaild = userRepo.findById(user.getUserId());
-        return !vaild.isPresent();
+        return vaild.isPresent();
     }
     public String signUp(UserEntity user) throws NoSuchAlgorithmException {
         //  중복확인
         boolean vaild = validateUser(user);
-        if (vaild){
+        if (!vaild){
             String newSalt = new SHA256().createSalt(user.getUserPW());
             String encryptPW = new SHA256().encrypt(user.getUserPW(), newSalt);
             // salt를 추가한 새 엔티티 생성

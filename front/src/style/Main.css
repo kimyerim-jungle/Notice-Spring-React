@@ -1,0 +1,38 @@
+.title{
+    margin-top: 100px;
+    margin-left: 100px;
+}
+
+.header{
+    margin-top: 100px;
+    margin-left: 1000px;
+}
+
+.post-list{
+    margin-left: 300px;
+    margin-top: 200px;
+    text-align: left;
+    width: 1000px;
+}
+
+.post-title{
+    width: 550px;
+}
+
+.post-user{
+    width:200px;
+}
+
+.button{
+    margin:5px;
+}
+
+a:link{
+    color:steelblue;
+}
+a:visited{
+    color:steelblue;
+}
+a:hover{
+    color:deepskyblue;
+}
