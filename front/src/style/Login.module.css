@@ -1,0 +1,23 @@
+.login{
+    width: 300px;
+    margin-top:30px;
+    vertical-align: center;
+}
+
+.signup{
+    width: 300px;
+    margin-top:30px;
+}
+
+.button{
+    margin-top: 30px;
+    width: 300px;
+    text-align: center;
+}
+
+.loginform{
+    display: inline-block;
+    margin-top: 150px;
+    width: 300px;
+    vertical-align: center;
+}
