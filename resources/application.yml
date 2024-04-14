@@ -1,0 +1,25 @@
+server:
+  address: localhost
+  port: 8080
+
+spring:
+  freemarker:
+    checkTemplateLocation: false
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${DB_URL}
+    username: yerim
+    password: ${DB_PW}
+
+  jpa:
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQLDialect
+    show-sql: true
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+jwt:
+  secret: d08f804b5fc7978fd264aafe9afff96413c70ffc0741d0fe921d66078e60fc5f
