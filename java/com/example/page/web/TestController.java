@@ -1,17 +1,17 @@
 package com.example.page.web;
 
+import com.example.page.DB.PostEntity;
 import com.example.page.DB.PostService;
 import com.example.page.DB.UserEntity;
 import com.example.page.DB.UserService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
+import java.util.Optional;
 
 
 @RestController
@@ -24,6 +24,14 @@ public class TestController {
     private final UserService userService;
     private final PostService postService;
 
+    @GetMapping(value = "/main")
+    public List<PostEntity> readPostAll(){
+        return postService.getAllPost();
+    }
+    @GetMapping(value = "/{index}")
+    public PostEntity readPostOne(@PathVariable Long index) {
+        return postService.postFind(index);
+    }
 
     @PostMapping(value = "/login/welcome")
     public Response login(@RequestBody Login user) {
@@ -67,4 +75,6 @@ public class TestController {
             return "530";
         }
     }
+
+
 }

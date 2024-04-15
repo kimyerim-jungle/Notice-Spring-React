@@ -1,8 +1,6 @@
-import logo from './logo.svg';
 import './style/Write.css';
 import axios from 'axios';
 import React, {useState, useContext} from 'react';
-import {Link} from 'react-router-dom';
 import {useNavigate} from "react-router-dom";
 import { UserContext } from "./auth/UserContext";
 
@@ -24,6 +22,7 @@ function Writing(){
         e.preventDefault();
         if (!user){
             alert("로그인이 필요합니다");
+            navigate("/login");
         }
         await axios.post("/write/send", {
             "title":title,
@@ -36,7 +35,7 @@ function Writing(){
                 const code = res.data.toString();
                 if (code === "130"){
                     alert("upload 성공");
-                    navigate("/");
+                    navigate("/main");
                 }
                 else if (code === "530"){
                     alert("실패. 다시 시도해주세요");

@@ -1,11 +1,9 @@
-import logo from './logo.svg';
 import './style/Main.css';
 import axios from 'axios';
-import React, {useContext} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
 import {useNavigate} from "react-router-dom";
 
-import Login from './Login';
 import {UserContext} from "./auth/UserContext";
 
 
@@ -36,18 +34,33 @@ function Header() {
     );
 };
 
-
-function Article() {
-    return (
+function addArticle(index, title, name, date){
+    //console.log("add", title);
+    return(
         <>
-            <div>
-
-            </div>
+            <tr>
+                <td><a href={`http://localhost:3000/${index}`}>{title}</a></td>
+                <td>{name}</td>
+                <td>{date}</td>
+            </tr>
         </>
     );
 }
 
 function Table() {
+    const [items, setItems] = useState(null);
+    const [keys, setKeys] = useState(null);
+
+    const getAllPost = async () => {
+        const res = await axios.get('/main');
+        setItems(res.data);
+        setKeys(Object.keys(res.data));
+        //console.log(items);
+    }
+    useEffect(() => {
+        getAllPost();
+    }, []);
+
     return (
         <div className={"post-list"}>
             <table className="table is-striped">
@@ -55,43 +68,30 @@ function Table() {
                 <tr>
                     <th className="post-title">글제목</th>
                     <th className="post-user">글쓴이</th>
-                    <th>작성일</th>
+                    <th className="post-date">작성일</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td><a href={"www"}>월요일 맛집</a></td>
-                    <td>예림</td>
-                    <td>04-08</td>
-                </tr>
-
-                <tr>
-                    <td><a href={"www"}>화요일 맛집</a></td>
-                    <td>예림</td>
-                    <td>04-08</td>
-                </tr>
-
-                <tr>
-                    <td><a href={"www"}>월수금요일 맛집</a></td>
-                    <td>예림</td>
-                    <td>04-08</td>
-                </tr>
+                {items && keys.map(key => {
+                    //console.log("key:", key);
+                    const item = items[key];
+                    const strArr = item.postDate.split('T');
+                    return addArticle(item.postIndex, item.postTitle, item.userName, strArr[0])
+                })}
                 </tbody>
-
             </table>
         </div>
     );
 }
 
 
-const Main = (props) => {
-
+// <Table props={props}></Table>
+const Main = () => {
 
     return (
         <>
-            <Header props={props}></Header>
+            <Header></Header>
             <Table></Table>
-
         </>
     );
 };

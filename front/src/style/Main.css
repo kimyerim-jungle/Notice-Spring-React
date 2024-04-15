@@ -16,10 +16,14 @@
 }
 
 .post-title{
-    width: 550px;
+    border-right-width: 1px;
+    border-right-color: #61dafb;
 }
 
 .post-user{
+    width:200px;
+}
+.post-date{
     width:200px;
 }
 

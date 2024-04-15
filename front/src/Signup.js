@@ -3,7 +3,6 @@ import {useNavigate} from "react-router-dom";
 
 import axios from "axios";
 import styles from "./style/Login.module.css";
-import classNames from "classnames";
 
 function Signup() {
     const [userid, setId] = useState('');

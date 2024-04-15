@@ -25,6 +25,8 @@ public class PostEntity {
     @JoinColumn(name = "userId")
     private String userId;
     @Column
+    private String userName;
+    @Column
     private String postDate;
 
     public Long getPostIndex() { return this.postIndex; }
@@ -32,4 +34,5 @@ public class PostEntity {
     public String getPostContent() { return this.postContent; }
     public String getUserId() { return this.userId; }
     public String getPostDate() { return this.postDate; }
+    public String getUserName() { return this.userName; }
 }

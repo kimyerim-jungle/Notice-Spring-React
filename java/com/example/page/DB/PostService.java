@@ -5,6 +5,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -20,18 +23,17 @@ public class PostService {
                 .postContent(post.getContent())
                 .postDate(post.getDate())
                 .userId(id)
+                .userName(post.getUserName())
                 .build();
         postRepo.save(newPost);
         log.info("upload={}", newPost);
     }
 
     // post 조회
-    public void postFind(Long index){
-
-    }
+    public PostEntity postFind(Long index){ return postRepo.findById(index).get(); }
     // 전체 post 조회
-    public void postFindAll(){
-
+    public List<PostEntity> getAllPost(){
+        return postRepo.findAll();
     }
 
     // post 수정

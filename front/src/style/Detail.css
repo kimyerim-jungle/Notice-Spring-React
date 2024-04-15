@@ -1,0 +1,15 @@
+.back-btn{
+    margin: 20px;
+}
+
+.wrap{
+    display: inline-block;
+    width: 1000px;
+    vertical-align: center;
+    margin-top: 200px;
+}
+
+.post {
+    margin: 20px;
+    margin-top:30px;
+}

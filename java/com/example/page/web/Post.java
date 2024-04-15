@@ -28,12 +28,13 @@ public class Post {
     }
 
     @Builder
-    // 서버->클라 조회 요청시에는 index를 알고있음 & DB 등록시 사용할 생성자
-    public Post(Long index, String title, String content, String date, String userid){
+    // DB 등록시 사용할 생성자
+    public Post(Long index, String title, String content, String date, String userid, String userName){
         this.index = index;
         this.title = title;
         this.content = content;
         this.date = date;
         this.userid = userid;
+        this.userName = userName;
     }
 }

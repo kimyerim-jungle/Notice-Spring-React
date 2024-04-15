@@ -31,7 +31,7 @@ function Login() {
                 if (code === "101"){
                     alert("login 성공");
                     updateUser({name: res.data["name"]});
-                    navigate("/");
+                    navigate("/main");
                 }
                 else if(code === "501") {
                     alert("존재하지 않는 ID입니다");
