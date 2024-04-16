@@ -4,8 +4,6 @@ import React, {useContext, useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
 import {useNavigate} from "react-router-dom";
 
-import {UserContext} from "./auth/UserContext";
-import {useCookies} from "react-cookie";
 
 function Header() {
     const navigate = useNavigate();
@@ -32,11 +30,12 @@ function Header() {
                     navigate("/write");
                 }}>글쓰기
                 </button>
-                { isLogin ? (<button className="button is-info" onClick={handleLogout}>로그아웃</button>)
+                { isLogin ? (<><p>{sessionStorage.getItem("name")}님</p><button className="button is-info" onClick={handleLogout}>로그아웃</button></>)
                     :(<button className="button is-info" onClick={() => {
                         navigate("/login");
                     }}>로그인</button>)
                 }
+                
             </div>
         </header>
     );

@@ -51,7 +51,7 @@ public class TestController {
         Response code = userService.login(newUser);
         log.info("{}, userLogin={}", code, user);
 
-        if (code.equals("101")){
+        if (code.getCode().equals("101")){
             session = request.getSession();
             session.setAttribute("loginUser", newUser.getUserId());
             model.addAttribute("user", newUser.getUserName());
@@ -108,5 +108,26 @@ public class TestController {
         }
     }
 
+    @PostMapping(value = "/{index}/delete")
+    public String deletePost(@PathVariable Long index){
+        postService.postDelete(index);
+        return "160";
+    }
+
+    @PostMapping(value = "/{index}/modify/send")
+    public String modifyPost(@PathVariable Long index, @RequestBody Post post){
+        UserEntity user = userService.findUserByName(post.getUserName());
+        if (user == null)
+            log.warn("NULL");
+        if (userService.validateUser(user)){
+            postService.postModify(post, index);
+            log.info("modify succ");
+            return "150";
+        }
+        else{
+            log.warn("modify fail");
+            return "550";
+        }
+    }
 
 }

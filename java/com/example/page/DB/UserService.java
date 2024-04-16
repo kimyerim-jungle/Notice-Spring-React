@@ -59,6 +59,7 @@ public class UserService {
             return Response.builder()
                     .code("101")
                     .name(getUser.getUserName())
+                    .id(getUser.getUserId())
                     .build();
         }
         else {

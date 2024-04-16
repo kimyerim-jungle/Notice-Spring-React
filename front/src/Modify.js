@@ -1,15 +1,15 @@
 import './style/Write.css';
-import axios from 'axios';
-import React, {useState, useContext} from 'react';
-import {useNavigate} from "react-router-dom";
-import { UserContext } from "./auth/UserContext";
+import React, {useState} from "react";
+import {useNavigate, useParams} from "react-router-dom";
+import axios from "axios";
 
-function Writing(){
-    //const { user } = useContext(UserContext);
+
+function Modifying() {
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
 
     const navigate = useNavigate();
+    const params = useParams();
 
     const handleChangeTitle = (event) => {
         setTitle(event.target.value);
@@ -18,40 +18,39 @@ function Writing(){
         setContent(event.target.value);
     }
 
-    const sendWrite = async (e) => {
+    const sendModify = async (e) => {
         e.preventDefault();
+        const index = Number(params.idx);
         if (!sessionStorage.getItem("name")){
             alert("로그인이 필요합니다");
             navigate("/login");
         }
         else
             var userName = sessionStorage.getItem("name");
-        await axios.post("/write/send", {
+        await axios.post(`/${index}/modify/send`, {
             "title":title,
             "content":content,
-            "userName":userName,
-            "date": new Date()
+            "userName": userName,
+            "userId": sessionStorage.getItem("id")
         }, {"Content-Type": "application/json"})
             .then(function (res) {
-                //console.log(res);
                 const code = res.data.toString();
-                if (code === "130"){
-                    alert("upload 성공");
-                    navigate("/main");
+                if (code === "150") {
+                    alert("수정되었습니다");
+                    navigate(`/${index}`);
                 }
-                else if (code === "530"){
-                    alert("실패. 다시 시도해주세요");
-                }
+                else
+                    alert("다시 시도해주세요");
             })
     }
 
     return (
         <div className={"write-form"}>
-            <form onSubmit={sendWrite}>
+            <form onSubmit={sendModify}>
                 <p><input className={"input post-title"} type={"text"} value={title}
-                    onChange={handleChangeTitle}/></p>
+                          onChange={handleChangeTitle}/></p>
                 <p><textarea className={"textarea is-info posting"} value={content}
-                    onChange={handleChangeContent}/></p>
+                             onChange={handleChangeContent}/></p>
 
                 <button className={"button is-info post-submit"} type={"submit"}>등록하기</button>
 
@@ -60,10 +59,11 @@ function Writing(){
     );
 }
 
-function Write() {
-    return (
-        <Writing></Writing>
+
+function Modify(){
+    return(
+        <Modifying></Modifying>
     );
 }
 
-export default Write;
+export default Modify;

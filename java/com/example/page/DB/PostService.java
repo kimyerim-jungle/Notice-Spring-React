@@ -16,7 +16,10 @@ public class PostService {
 
     // post 등록
     public void postUpload(Post post, String id){
-        Long newindex = postRepo.count()+1;
+        // Long newindex = postRepo.count()+1;
+        Long newindex = 1L;
+        if (postRepo.count() > 0)
+            newindex = postRepo.findTopByOrderByPostIndexDesc().get().getPostIndex() + 1;
         PostEntity newPost = PostEntity.builder()
                 .postIndex(newindex)
                 .postTitle(post.getTitle())
@@ -37,13 +40,20 @@ public class PostService {
     }
 
     // post 수정
-    public void postUpdate(Post post){
+    public void postModify(Post post, Long index){
+        PostEntity modify = postRepo.findById(index).get();
+        if (modify != null) {
+            modify.setContent(post.getContent());
+            modify.setTitle(post.getTitle());
+        }
 
+        postRepo.save(modify);
+        log.info("modify={}", modify);
     }
 
     // post 삭제
     public void postDelete(Long index){
-
+        postRepo.deleteById(index);
     }
 
 }

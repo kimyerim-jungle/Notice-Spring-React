@@ -8,8 +8,9 @@ import Login from './Login';
 import Signup from "./Signup";
 import Write from "./Write";
 import Detail from "./Detail";
-import "bulma/css/bulma.css";
+import Modify from "./Modify";
 
+import "bulma/css/bulma.css";
 import { UserProvider } from "./auth/UserContext";
 import { CookiesProvider } from "react-cookie";
 
@@ -28,6 +29,7 @@ function App() {
                         <Route path="/write" element={<Write />}></Route>
 
                         <Route path="/:idx" element={<Detail />}></Route>
+                        <Route path="/:idx/modify" element={<Modify />}></Route>
                     </Routes>
                 </BrowserRouter>
             </CookiesProvider>

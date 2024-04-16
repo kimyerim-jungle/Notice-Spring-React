@@ -1,5 +1,7 @@
-.back-btn{
-    margin: 20px;
+.detail-btn{
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 20px;
 }
 
 .wrap{
@@ -14,13 +16,14 @@
     margin-top:30px;
 }
 
-.comment-from {
-    width: 800px;
+.comment-form {
+    width: 950px;
     display: inline-block;
     vertical-align: center;
+    margin: 30px;
 }
 .comment {
-    width: 800px;
+    width: 950px;
     display: inline-block;
     vertical-align: center;
     text-align: left;

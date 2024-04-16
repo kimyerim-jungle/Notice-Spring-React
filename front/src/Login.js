@@ -30,6 +30,8 @@ function Login() {
                 if (code === "101"){
                     alert("login 성공");
                     sessionStorage.setItem("name", res.data["name"]);
+                    sessionStorage.setItem("id", res.data["id"]);
+                    console.log("session", sessionStorage);
                     navigate("/main");
                 }
                 else if(code === "501") {

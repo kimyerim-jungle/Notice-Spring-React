@@ -35,4 +35,11 @@ public class PostEntity {
     public String getUserId() { return this.userId; }
     public String getPostDate() { return this.postDate; }
     public String getUserName() { return this.userName; }
+
+    public void setContent(String content) {
+        this.postContent = content;
+    }
+    public void setTitle(String title) {
+        this.postTitle = title;
+    }
 }

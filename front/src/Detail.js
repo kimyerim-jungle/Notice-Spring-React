@@ -12,38 +12,84 @@ function Log() {
     );
 }
 
+function DeleteBtn() {
+    const params = useParams();
+    const navigate = useNavigate();
+    const index = Number(params.idx);
+
+    const postModify = async (e) => {
+        e.preventDefault();
+        // await axios.post(`/${index}/modify`)
+        //     .then(function (res){
+        //         const code = res.data.toString();
+        //         if(code === "150") {
+        //             alert("수정되었습니다");
+        //             window.location.reload();
+        //         }
+        //         else {
+        //             alert("다시 시도해주세요");
+        //         }
+        //     })
+        navigate(`/${index}/modify`);
+    }
+
+    const postDelete = async (e) =>{
+        e.preventDefault();
+
+        await axios.post(`/${index}/delete`)
+            .then(function (res){
+            const code = res.data.toString();
+            if(code === "160") {
+                alert("삭제되었습니다");
+                navigate("/main");
+            }
+            else {
+                alert("다시 시도해주세요");
+            }
+        })
+    }
+    
+    return (
+        <div className={"columns"}>
+            <span className={"column"}></span>
+            <button className={"button is-success is-outlined detail-btn column is-1"} onClick={postModify}>수정</button>
+            <button className={"button is-danger is-outlined detail-btn column is-1"} onClick={postDelete}>삭제</button>
+        </div>
+    );
+}
+
 function addArticle(title, content, user, date) {
     const main = content.split("\n");
-
+    //console.log("session:", sessionStorage.getItem("id"), " user:",user)
     return (
         <>
         <div className={"message-header"}>
-            <span>{title}</span>
-            <span>{user}</span>
-            <spen>{date}</spen>
+            <span className={""}>{title}</span>
+            <span className={""}>{user}</span>
+            <spen className={""}>{date}</spen>
             </div>
         <div className={"message-body has-text-left"}>
             {main.map (elem => {
                 return <p>{elem}</p>
             })}
         </div>
+            { sessionStorage.getItem("id") === user ? <DeleteBtn/> : null }
         </>
     );
 }
 
 function addComment(content, user, date) {
     return (
-      <>
-          <div className={"notification is-light"}>
-              <p><span>{user}</span><span>{date}</span></p>
-              <p>{content}</p>
-          </div>
+        <>
+        <div className={"message is-light"}>
+            <p className={"message-header"}><span>{user}</span><span className={"level-right"}>{date}</span></p>
+            <p className={"message-body"}>{content}</p>
+        </div>
       </>
     );
 }
 
 function Comment() {
-    //const { user } = useContext(UserContext);
     const [comment, setComment] = useState("");
 
     const navigate = useNavigate();
@@ -68,11 +114,10 @@ function Comment() {
             "date": new Date()
         }, {"Content-Type": "application/json"})
             .then(function (res) {
-                console.log(res);
+                //console.log(res);
                 const code = res.data.toString();
                 if (code === "140"){
                     setComment("");
-                    //navigate(`/${index}`);
                     window.location.reload();
                 }
                 else if (code === "540" || code === "541"){
@@ -84,12 +129,10 @@ function Comment() {
     return (
         <div className={"comment-form"}>
             <form onSubmit={sendComment}>
-                <div>
-                     <input className={"input comment-from"} type={"text"} value={comment}
-                       onChange={handleChangeComment}/>
-                </div>
+                 <p><input className={"input"} type={"text"} value={comment}
+                   onChange={handleChangeComment}/>
                 <button className={"button is-info"} type={"submit"}>등록</button>
-
+                 </p>
             </form>
         </div>
     );
@@ -104,31 +147,30 @@ function OnePost() {
     const getPost = async () => {
         const index = Number(params.idx);
         const res = await axios.get(`/${index}`);
-
+        //console.log("post:", res.data);
         const inputData = {
             ...res.data,
             postDate: res.data.postDate.split('T')[0]
         }
         setPost(inputData);
-        //console.log("data:", inputData);
+        console.log("data:", inputData);
     }
     const getComment = async () => {
         const index = Number(params.idx);
         const res = await axios.get(`/${index}/getCmt`);
-        if (res) {
-            const inputData = {
-                ...res.data,
+        const inputData = {
+            ...res.data,
                 //cmtDate: res.data.cmtDate.split('T')[0]
-            }
-            setComment(inputData);
-            setKeys(Object.keys(inputData));
-            console.log("comment:", inputData);
         }
+        setComment(inputData);
+        setKeys(Object.keys(inputData));
+        //console.log("comment:", inputData);
     }
-    useEffect( () => {
+    useEffect( () =>  {
         getPost();
         getComment();
     }, []);
+
 
     return (
         <>
@@ -150,14 +192,17 @@ const Detail = () => {
     const navigate = useNavigate();
 
     function back() {
-        navigate(-1);
+        navigate("/main");
     }
 
     return (
         <>
             <div className={"wrap"}>
-                <button className={"button is-info level-left back-btn"} onClick={back}>뒤로</button>
-                <OnePost/>
+                <div className={"columns"}>
+                    <button className={"button is-info level-left detail-btn column is-1"} onClick={back}>Main</button>
+                    <span className={"column"}></span>
+                </div>
+                <OnePost />
                 <Comment />
             </div>
         </>
