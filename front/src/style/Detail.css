@@ -13,3 +13,17 @@
     margin: 20px;
     margin-top:30px;
 }
+
+.comment-from {
+    width: 800px;
+    display: inline-block;
+    vertical-align: center;
+}
+.comment {
+    width: 800px;
+    display: inline-block;
+    vertical-align: center;
+    text-align: left;
+}
+.message-body{
+}

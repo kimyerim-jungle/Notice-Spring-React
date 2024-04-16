@@ -5,7 +5,7 @@ import {useNavigate} from "react-router-dom";
 import { UserContext } from "./auth/UserContext";
 
 function Writing(){
-    const { user } = useContext(UserContext);
+    //const { user } = useContext(UserContext);
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
 
@@ -20,14 +20,16 @@ function Writing(){
 
     const sendWrite = async (e) => {
         e.preventDefault();
-        if (!user){
+        if (!sessionStorage.getItem("name")){
             alert("로그인이 필요합니다");
             navigate("/login");
         }
+        else
+            var userName = sessionStorage.getItem("name");
         await axios.post("/write/send", {
             "title":title,
             "content":content,
-            "userName":user.name,
+            "userName":userName,
             "date": new Date()
         }, {"Content-Type": "application/json"})
             .then(function (res) {

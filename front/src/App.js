@@ -11,23 +11,26 @@ import Detail from "./Detail";
 import "bulma/css/bulma.css";
 
 import { UserProvider } from "./auth/UserContext";
+import { CookiesProvider } from "react-cookie";
 
 
 function App() {
   return (
     <div className="App">
         <UserProvider>
-        <BrowserRouter>
-            <Routes>
-                <Route path="/" element={<Navigate to="/main"/>}></Route>
-                <Route path="/main" element={<Main />}></Route>
-                <Route path="/login" element={<Login />}></Route>
-                <Route path="/signup" element={<Signup />}></Route>
-                <Route path="/write" element={<Write />}></Route>
+            <CookiesProvider>
+                <BrowserRouter>
+                    <Routes>
+                        <Route path="/" element={<Navigate to="/main"/>}></Route>
+                        <Route path="/main" element={<Main />}></Route>
+                        <Route path="/login" element={<Login />}></Route>
+                        <Route path="/signup" element={<Signup />}></Route>
+                        <Route path="/write" element={<Write />}></Route>
 
-                <Route path="/:idx" element={<Detail />}></Route>
-            </Routes>
-        </BrowserRouter>
+                        <Route path="/:idx" element={<Detail />}></Route>
+                    </Routes>
+                </BrowserRouter>
+            </CookiesProvider>
         </UserProvider>
     </div>
   );

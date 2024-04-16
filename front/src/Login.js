@@ -3,10 +3,9 @@ import axios from 'axios';
 import React, {useState, useContext} from "react";
 import {useNavigate} from "react-router-dom";
 import { UserContext } from "./auth/UserContext";
-
+import { useCookies } from "react-cookie";
 
 function Login() {
-    const { user, updateUser } = useContext(UserContext);
     const [userid, setId] = useState('');
     const [password, setPW] = useState('');
 
@@ -30,7 +29,7 @@ function Login() {
                 const code = res.data["code"];
                 if (code === "101"){
                     alert("login 성공");
-                    updateUser({name: res.data["name"]});
+                    sessionStorage.setItem("name", res.data["name"]);
                     navigate("/main");
                 }
                 else if(code === "501") {

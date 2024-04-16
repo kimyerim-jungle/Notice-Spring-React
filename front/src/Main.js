@@ -5,16 +5,24 @@ import {Link} from 'react-router-dom';
 import {useNavigate} from "react-router-dom";
 
 import {UserContext} from "./auth/UserContext";
-
+import {useCookies} from "react-cookie";
 
 function Header() {
     const navigate = useNavigate();
-    const {user, updateUser} = useContext(UserContext);
+    const [isLogin, setIsLogin] = useState(false);
 
     const handleLogout = () => {
         alert("logout 되었습니다");
-        updateUser(null);
+        sessionStorage.clear();
+        setIsLogin(false);
     };
+
+    useEffect(() => {
+        if(sessionStorage.getItem("name")){
+            setIsLogin(true);
+            console.log("Loing 상태입니다");
+        }
+    }, []);
 
     return (
         <header className="title">
@@ -24,7 +32,7 @@ function Header() {
                     navigate("/write");
                 }}>글쓰기
                 </button>
-                { user ? (<button className="button is-info" onClick={handleLogout}>로그아웃</button>)
+                { isLogin ? (<button className="button is-info" onClick={handleLogout}>로그아웃</button>)
                     :(<button className="button is-info" onClick={() => {
                         navigate("/login");
                     }}>로그인</button>)
@@ -35,7 +43,6 @@ function Header() {
 };
 
 function addArticle(index, title, name, date){
-    //console.log("add", title);
     return(
         <>
             <tr>

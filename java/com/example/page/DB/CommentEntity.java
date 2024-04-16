@@ -1,38 +1,36 @@
 package com.example.page.DB;
 
-
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Cleanup;
 import lombok.NoArgsConstructor;
-
-import java.sql.Date;
 
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name="PostList")
-public class PostEntity {
+@Table(name="Comment")
+public class CommentEntity {
+    @Id
+    private Long cmtIndex;
 
-    @Id private Long postIndex;
+    @JoinColumn(name="postIndex")
+    private Long postIndex;
 
-    @Column
-    private String postTitle;
-    @Column
-    private String postContent;
-    @JoinColumn(name = "userId")
+    @JoinColumn(name="userId")
     private String userId;
+
     @Column
     private String userName;
     @Column
-    private String postDate;
+    private String comment;
+    @Column
+    private String cmtDate;
 
+    public Long getCmtIndex() { return this.cmtIndex; }
     public Long getPostIndex() { return this.postIndex; }
-    public String getPostTitle() { return this.postTitle; }
-    public String getPostContent() { return this.postContent; }
     public String getUserId() { return this.userId; }
-    public String getPostDate() { return this.postDate; }
     public String getUserName() { return this.userName; }
+    public String getComment() { return this.comment; }
+    public String getCmtDate() { return this.cmtDate; }
 }
