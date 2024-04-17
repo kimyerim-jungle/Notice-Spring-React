@@ -18,6 +18,11 @@ function Login() {
     const handleChangePW = (event) => {
         setPW(event.target.value);
     }
+    function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+    }
     const sendForm = async (e) => {
         e.preventDefault();
         await axios.post("/login/welcome", {
@@ -29,9 +34,9 @@ function Login() {
                 const code = res.data["code"];
                 if (code === "101"){
                     alert("login 성공");
+                    document.cookie = "JSESSIONID=" + getCookie("JSESSIONID");
                     sessionStorage.setItem("name", res.data["name"]);
                     sessionStorage.setItem("id", res.data["id"]);
-                    console.log("session", sessionStorage);
                     navigate("/main");
                 }
                 else if(code === "501") {

@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -45,19 +46,22 @@ public class TestController {
     }
 
     @PostMapping(value = "/login/welcome")
-    public Response login(@RequestBody Login user, HttpServletRequest request, HttpSession session, Model model) {
+    public ResponseEntity<Response> login(@RequestBody Login user, HttpSession session) {
         UserEntity newUser;
         newUser = ToUserEntity.toUserEntity(user);
         Response code = userService.login(newUser);
         log.info("{}, userLogin={}", code, user);
 
         if (code.getCode().equals("101")){
-            session = request.getSession();
+            //session = request.getSession();
             session.setAttribute("loginUser", newUser.getUserId());
-            model.addAttribute("user", newUser.getUserName());
+            //model.addAttribute("user", newUser.getUserName());
+            return ResponseEntity.ok()
+                    .header("Set-Cookie", "JSESSIONID=" + session.getId())
+                    .body(code);
         }
 
-        return code;
+        return ResponseEntity.ok().body(code);
     }
 
     @PostMapping(value = "/signup/welcome")
